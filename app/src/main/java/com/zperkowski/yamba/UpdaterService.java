@@ -8,7 +8,7 @@ import android.util.Log;
 
 import java.util.List;
 
-import winterwell.jtwitter.Status;
+import winterwell.jtwitter.Twitter.Status;
 import winterwell.jtwitter.Twitter;
 
 /**
