@@ -5,4 +5,5 @@
     <string name="status_activity_hint">Please enter your status update</string>
     <string name="start_service">Start service</string>
     <string name="stop_service">Stop service</string>
+    <string name="refresh_service">Refresh timeline</string>
 </resources>
