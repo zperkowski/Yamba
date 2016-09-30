@@ -20,13 +20,11 @@ public class UpdaterService extends Service{
     static final String TAG = "UpdaterService";
     static final int DELAY = 30; //in seconds
     boolean running = false;
-    Twitter twitter;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        twitter = new Twitter("student", "password");
-        twitter.setAPIRootUrl("http://yamba.newcircle.com/api");
+
         Log.d(TAG, "OnCreated");
     }
 
@@ -38,7 +36,8 @@ public class UpdaterService extends Service{
             public void run() {
                 try {
                     while (running) {
-                        List<Status> timeline = twitter.getPublicTimeline();
+                        List<Status> timeline =
+                                ((YambaApp) getApplication()).getTwitter().getPublicTimeline();
 
                         for (Status status : timeline) {
                             Log.d(TAG, String.format("%s: %s", status.user.name, status.text));
