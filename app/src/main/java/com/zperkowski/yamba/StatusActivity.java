@@ -73,6 +73,7 @@ public class StatusActivity extends AppCompatActivity implements View.OnClickLis
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intentUpdater = new Intent(this, UpdaterService.class);
         Intent intentRefresh = new Intent(this, RefreshService.class);
+        Intent intentPreferences = new Intent(this, PrefsActivity.class);
 
         switch (item.getItemId()) {
             case R.id.item_refresh_service:
@@ -83,6 +84,9 @@ public class StatusActivity extends AppCompatActivity implements View.OnClickLis
                 return true;
             case R.id.item_stop_service:
                 stopService(intentUpdater);
+                return true;
+            case R.id.item_preferences:
+                startActivity(intentPreferences);
                 return true;
             default:
 

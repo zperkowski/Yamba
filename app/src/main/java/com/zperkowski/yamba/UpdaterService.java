@@ -3,6 +3,7 @@ package com.zperkowski.yamba;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import android.support.annotation.IntegerRes;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
@@ -18,7 +19,6 @@ import winterwell.jtwitter.TwitterException;
 
 public class UpdaterService extends Service{
     static final String TAG = "UpdaterService";
-    static final int DELAY = 30; //in seconds
     boolean running = false;
 
     @Override
@@ -42,7 +42,8 @@ public class UpdaterService extends Service{
                         for (Status status : timeline) {
                             Log.d(TAG, String.format("%s: %s", status.user.name, status.text));
                         }
-                        Thread.sleep(DELAY * 1000);
+                        int delay = Integer.parseInt(((YambaApp)getApplication()).prefs.getString("delay", "30"));
+                        Thread.sleep(delay * 1000);
                     }
                 } catch (TwitterException e) {
                     Log.d(TAG, "Failed because of network error", e);

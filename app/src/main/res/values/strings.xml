@@ -6,4 +6,14 @@
     <string name="start_service">Start service</string>
     <string name="stop_service">Stop service</string>
     <string name="refresh_service">Refresh timeline</string>
+    <string name="preferences">Preferences</string>
+    <string name="username_summary">Enter username</string>
+    <string name="password_summary">Enter password</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="server">Enter server API address</string>
+    <string name="delay">Delay</string>
+    <string name="delay_summary">How frequent to check for updates</string>
+
+
 </resources>
