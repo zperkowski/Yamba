@@ -31,10 +31,12 @@ public class RefreshService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
+        StatusData statusData = ((YambaApp)getApplication()).statusData;
         try {
             List<Twitter.Status> timeline = twitter.getPublicTimeline();
 
             for (Twitter.Status status : timeline) {
+                statusData.insert(status);
                 Log.d(TAG, String.format("%s: %s", status.user.name, status.text));
             }
         } catch (TwitterException e) {

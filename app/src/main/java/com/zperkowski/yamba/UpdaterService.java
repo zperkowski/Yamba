@@ -40,6 +40,7 @@ public class UpdaterService extends Service{
                                 ((YambaApp) getApplication()).getTwitter().getPublicTimeline();
 
                         for (Status status : timeline) {
+                            ((YambaApp)getApplication()).statusData.insert(status);
                             Log.d(TAG, String.format("%s: %s", status.user.name, status.text));
                         }
                         int delay = Integer.parseInt(((YambaApp)getApplication()).prefs.getString("delay", "30"));
