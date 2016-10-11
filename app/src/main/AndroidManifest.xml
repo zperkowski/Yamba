@@ -21,6 +21,7 @@
         <service android:name=".UpdaterService"></service>
         <service android:name=".RefreshService"></service>
         <activity android:name=".PrefsActivity"></activity>
+        <activity android:name=".TimelineActivity"></activity>
         <receiver android:name=".BootReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />

@@ -1,6 +1,5 @@
 package com.zperkowski.yamba;
 
-import android.app.IntentService;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -71,11 +70,15 @@ public class StatusActivity extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intentTimeline = new Intent(this, TimelineActivity.class);
         Intent intentUpdater = new Intent(this, UpdaterService.class);
         Intent intentRefresh = new Intent(this, RefreshService.class);
         Intent intentPreferences = new Intent(this, PrefsActivity.class);
 
         switch (item.getItemId()) {
+            case R.id.item_timeline:
+                startService(intentTimeline);
+                return true;
             case R.id.item_refresh_service:
                 startService(intentRefresh);
                 return true;
@@ -89,7 +92,6 @@ public class StatusActivity extends AppCompatActivity implements View.OnClickLis
                 startActivity(intentPreferences);
                 return true;
             default:
-
                 return false;
         }
     }

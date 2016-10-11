@@ -2,10 +2,14 @@ package com.zperkowski.yamba;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
 import android.util.Log;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import winterwell.jtwitter.Twitter;
 
@@ -42,6 +46,12 @@ public class StatusData {
         sqLiteDatabase.insertWithOnConflict(TABLE, null, values, SQLiteDatabase.CONFLICT_IGNORE);
     }
 
+    public Cursor query() {
+        sqLiteDatabase = dbHelper.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.query(TABLE, null, null, null, null, null, C_CREATED_AT + " DESC");
+        return cursor;
+    }
+
     class DbHelper extends SQLiteOpenHelper {
         public DbHelper() {
             super(context, DB_NAME, null, DB_VERSION );
@@ -58,7 +68,8 @@ public class StatusData {
 
         @Override
         public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-            sqLiteDatabase.execSQL("drop if exists " + TABLE);
+            Log.d(TAG, "onUpgrade from: " + i + " to: " + i1);
+            sqLiteDatabase.execSQL("drop table if exists " + TABLE);
             onCreate(sqLiteDatabase);
         }
     }
