@@ -10,6 +10,7 @@ import android.widget.TextView;
  */
 
 public class TimelineActivity extends Activity {
+    public final static String TAG = "TimelineActivity";
     TextView textOut;
     Cursor cursor;
 
