@@ -70,7 +70,7 @@ public class StatusActivity extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intentTimeline = new Intent(StatusActivity.this, TimelineActivity.class);
+        Intent intentTimeline = new Intent(this, TimelineActivity.class);
         Intent intentUpdater = new Intent(this, UpdaterService.class);
         Intent intentRefresh = new Intent(this, RefreshService.class);
         Intent intentPreferences = new Intent(this, PrefsActivity.class);
