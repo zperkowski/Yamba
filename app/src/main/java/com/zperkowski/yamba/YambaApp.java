@@ -1,11 +1,15 @@
 package com.zperkowski.yamba;
 
 import android.app.Application;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import java.util.List;
+
 import winterwell.jtwitter.Twitter;
+import winterwell.jtwitter.TwitterException;
 
 /**
  * Created by zperkowski on 30-Sep-16.
@@ -13,6 +17,7 @@ import winterwell.jtwitter.Twitter;
 
 public class YambaApp extends Application implements SharedPreferences.OnSharedPreferenceChangeListener{
     static final String TAG = "YambaApp";
+    public static final String ACTION_NEW_STATUS = "com.zperkowski.yamba.NEW_STATUS";
     private Twitter twitter;
     SharedPreferences prefs;
     StatusData statusData;
@@ -42,5 +47,34 @@ public class YambaApp extends Application implements SharedPreferences.OnSharedP
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         twitter = null;
         Log.d(TAG, "onSharedPreferenceChanged for key: " + key);
+    }
+
+    long lastTimestampSeen = -1;
+
+    public int pullAndInsert() {
+        int count = 0;
+        long biggestTimestamp = -1;
+        try {
+            List<Twitter.Status> timeline = getTwitter().getPublicTimeline();
+
+            for (Twitter.Status status : timeline) {
+                statusData.insert(status);
+//                if (biggestTimestamp == -1)
+//                    biggestTimestamp = status.createdAt.getTime();
+                if (status.createdAt.getTime() > this.lastTimestampSeen) {
+                    count++;
+                    biggestTimestamp = (status.createdAt.getTime() > biggestTimestamp) ?
+                            status.createdAt.getTime() : biggestTimestamp;
+                    lastTimestampSeen = status.createdAt.getTime();
+                }
+                Log.d(TAG, String.format("%s: %s", status.user.name, status.text));
+            }
+        } catch (TwitterException e) {
+            Log.e(TAG, "Failed to pull timeline", e);
+        }
+        if (count > 0) {
+            sendBroadcast(new Intent(ACTION_NEW_STATUS).putExtra("count", count));
+        }
+    return count;
     }
 }

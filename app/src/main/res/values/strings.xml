@@ -15,6 +15,7 @@
     <string name="delay">Delay</string>
     <string name="delay_summary">How frequent to check for updates</string>
     <string name="timeline">Timeline</string>
+    <string name="status_update">Update status</string>
     <string-array name="delayNames">
         <item>Every minute</item>
         <item>Every five minutes</item>

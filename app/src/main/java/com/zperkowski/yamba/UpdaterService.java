@@ -3,15 +3,8 @@ package com.zperkowski.yamba;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
-import android.support.annotation.IntegerRes;
 import android.support.annotation.Nullable;
 import android.util.Log;
-
-import java.util.List;
-
-import winterwell.jtwitter.Twitter.Status;
-import winterwell.jtwitter.Twitter;
-import winterwell.jtwitter.TwitterException;
 
 /**
  * Created by zperkowski on 27.09.16.
@@ -36,18 +29,10 @@ public class UpdaterService extends Service{
             public void run() {
                 try {
                     while (running) {
-                        List<Status> timeline =
-                                ((YambaApp) getApplication()).getTwitter().getPublicTimeline();
-
-                        for (Status status : timeline) {
-                            ((YambaApp)getApplication()).statusData.insert(status);
-                            Log.d(TAG, String.format("%s: %s", status.user.name, status.text));
-                        }
+                        ((YambaApp)getApplication()).pullAndInsert();
                         int delay = Integer.parseInt(((YambaApp)getApplication()).prefs.getString("delay", "30"));
                         Thread.sleep(delay * 1000);
                     }
-                } catch (TwitterException e) {
-                    Log.d(TAG, "Failed because of network error", e);
                 } catch (InterruptedException e) {
                     Log.d(TAG, "Updater interrupted", e);
                 }

@@ -15,17 +15,26 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".StatusActivity">
+        <activity android:name=".StatusActivity"
+            android:configChanges="orientation"
+            android:label="@string/status_update">
+        </activity>
+        <service android:name=".UpdaterService">
+        </service>
+        <service android:name=".RefreshService">
+        </service>
+        <activity android:name=".PrefsActivity"
+            android:exported="false"
+            android:label="@string/preferences">
+        </activity>
+        <activity android:name=".TimelineActivity"
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name=".UpdaterService"></service>
-        <service android:name=".RefreshService"></service>
-        <activity android:name=".PrefsActivity"></activity>
-        <activity android:name=".TimelineActivity"></activity>
         <receiver android:name=".BootReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />

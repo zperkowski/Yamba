@@ -3,11 +3,7 @@ package com.zperkowski.yamba;
 import android.app.IntentService;
 import android.content.Intent;
 import android.util.Log;
-
-import java.util.List;
-
 import winterwell.jtwitter.Twitter;
-import winterwell.jtwitter.TwitterException;
 
 /**
  * Created by zperkowski on 30-Sep-16.
@@ -31,17 +27,7 @@ public class RefreshService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        StatusData statusData = ((YambaApp)getApplication()).statusData;
-        try {
-            List<Twitter.Status> timeline = twitter.getPublicTimeline();
-
-            for (Twitter.Status status : timeline) {
-                statusData.insert(status);
-                Log.d(TAG, String.format("%s: %s", status.user.name, status.text));
-            }
-        } catch (TwitterException e) {
-            Log.e(TAG, "Failed to access twitter service", e);
-        }
+        ((YambaApp)getApplication()).pullAndInsert();
         Log.d(TAG, "onHandleIntent");
     }
 
