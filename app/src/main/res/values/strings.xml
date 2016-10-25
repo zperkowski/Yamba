@@ -17,15 +17,19 @@
     <string name="timeline">Timeline</string>
     <string name="status_update">Update status</string>
     <string-array name="delayNames">
-        <item>Every minute</item>
-        <item>Every five minutes</item>
+        <item>Every fifteen minutes</item>
         <item>Every half hour</item>
         <item>Every hour</item>
+        <item>Every half day</item>
+        <item>Once a day</item>
+        <item>Never</item>
     </string-array>
     <string-array name="delayValues">
-        <item >60</item>
-        <item >300</item>
-        <item >1800</item>
-        <item >3600</item>
+        <item>900000</item>
+        <item>1800000</item>
+        <item>3600000</item>
+        <item>43200000</item>
+        <item>86400000</item>
+        <item>0</item>
     </string-array>
 </resources>

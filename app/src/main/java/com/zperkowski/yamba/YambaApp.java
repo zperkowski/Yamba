@@ -18,6 +18,8 @@ import winterwell.jtwitter.TwitterException;
 public class YambaApp extends Application implements SharedPreferences.OnSharedPreferenceChangeListener{
     static final String TAG = "YambaApp";
     public static final String ACTION_NEW_STATUS = "com.zperkowski.yamba.NEW_STATUS";
+    public static final String ACTION_REFRESH = "com.zperkowski.yamba.RefreshService";
+    public static final String ACTION_REFRESH_ALARM = "com.zperkowski.yamba.RefreshAlarm";
     private Twitter twitter;
     SharedPreferences prefs;
     StatusData statusData;
@@ -43,9 +45,12 @@ public class YambaApp extends Application implements SharedPreferences.OnSharedP
         return twitter;
     }
 
+    static final Intent refreshAlarm = new Intent(ACTION_REFRESH_ALARM);
+
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         twitter = null;
+        sendBroadcast(refreshAlarm);
         Log.d(TAG, "onSharedPreferenceChanged for key: " + key);
     }
 
@@ -59,8 +64,6 @@ public class YambaApp extends Application implements SharedPreferences.OnSharedP
 
             for (Twitter.Status status : timeline) {
                 statusData.insert(status);
-//                if (biggestTimestamp == -1)
-//                    biggestTimestamp = status.createdAt.getTime();
                 if (status.createdAt.getTime() > this.lastTimestampSeen) {
                     count++;
                     biggestTimestamp = (status.createdAt.getTime() > biggestTimestamp) ?

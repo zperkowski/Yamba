@@ -22,6 +22,9 @@
         <service android:name=".UpdaterService">
         </service>
         <service android:name=".RefreshService">
+            <intent-filter>
+                <action android:name="com.zperkowski.yamba.RefreshService"/>
+            </intent-filter>
         </service>
         <activity android:name=".PrefsActivity"
             android:exported="false"
@@ -35,8 +38,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver android:name=".BootReceiver">
+        <receiver android:name=".RefreshScheduleReceiver">
             <intent-filter>
+                <action android:name="com.zperkowski.yamba.RefreshAlarm" />
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
