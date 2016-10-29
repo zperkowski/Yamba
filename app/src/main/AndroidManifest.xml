@@ -44,6 +44,11 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+        <provider
+            android:authorities="com.zperkowski.yamba.provider"
+            android:name=".StatusProvider">
+
+        </provider>
     </application>
 
 </manifest>

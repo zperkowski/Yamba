@@ -21,7 +21,7 @@ import android.widget.TextView;
 
 public class TimelineActivity extends ListActivity {
     public final static String TAG = "TimelineActivity";
-    final static String[] FROM = {StatusData.C_USER, StatusData.C_CREATED_AT, StatusData.C_TEXT};
+    final static String[] FROM = {StatusProvider.C_USER, StatusProvider.C_CREATED_AT, StatusProvider.C_TEXT};
     final static int[] TO = {R.id.row_user, R.id.row_created_at, R.id.row_text};
     Cursor cursor;
     SimpleCursorAdapter adapter;
@@ -29,7 +29,8 @@ public class TimelineActivity extends ListActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        cursor = ((YambaApp)getApplication()).statusData.query();
+        cursor = getContentResolver().query(StatusProvider.CONTENT_URI, null, null, null,
+                StatusProvider.C_CREATED_AT + " DESC");
         adapter = new SimpleCursorAdapter(this, R.layout.row, cursor, FROM, TO);
         adapter.setViewBinder(VIEW_BINDER);
         setTitle(R.string.timeline);
@@ -57,7 +58,7 @@ public class TimelineActivity extends ListActivity {
             if (view.getId() != R.id.row_created_at)
                 return false;
 
-            long time = cursor.getLong(cursor.getColumnIndex(StatusData.C_CREATED_AT));
+            long time = cursor.getLong(cursor.getColumnIndex(StatusProvider.C_CREATED_AT));
             CharSequence relativTime = DateUtils.getRelativeTimeSpanString(time);
             ((TextView) view).setText(relativTime);
 
@@ -102,7 +103,8 @@ public class TimelineActivity extends ListActivity {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            cursor = ((YambaApp)getApplication()).statusData.query();
+            cursor = getContentResolver().query(StatusProvider.CONTENT_URI, null, null, null,
+                    StatusProvider.C_CREATED_AT + " DESC");
             adapter.changeCursor(cursor);
             Log.d(TAG, "TimelineReceiver onReceive changeCursor with count: "
                     + intent.getIntExtra("count", 0));
